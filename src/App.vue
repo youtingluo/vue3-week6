@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <router-link to="/">首頁</router-link> |
+    <router-link to="/">這是首頁唷</router-link> |
     <router-link to="/products">產品列表</router-link> |
     <router-link to="/carts">購物車列表</router-link>
   </div>
