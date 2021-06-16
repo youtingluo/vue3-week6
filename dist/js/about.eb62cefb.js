@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{e6dc:function(n,e,t){"use strict";t.r(e);var c=t("7a23"),u=Object(c["g"])("h1",null,"產品列表",-1);function o(n,e){return Object(c["p"])(),Object(c["d"])("div",null,[u])}const d={};d.render=o;e["default"]=d}}]);
-//# sourceMappingURL=about.eb62cefb.js.map
