@@ -3,7 +3,11 @@
 @import '~bootstrap/scss/mixins';
 @import '~bootstrap';
 // ~ sass 對應 node_modules
-
-// ----component------
+@import url("https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap");
+// ---- component ----
 // UserNavbar
 @import '../assets/helpers/component/userNavbar';
+
+// ---- pages ----
+// index
+@import '../assets/helpers/pages/index';

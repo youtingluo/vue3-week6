@@ -31,7 +31,9 @@
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <div class="btn btn-outline-secondary">加入購物車</div>
+          <div class="btn btn-outline-secondary"
+          :class="{ 'disabled' : product.id === icon.isLoading }"
+          @click="addToCart(product.id)">加入購物車</div>
         </div>
       </div>
     </div>
@@ -71,12 +73,17 @@
 </template>
 
 <script>
+import emitter from '../assets/javascript/emitter';
+
 export default {
   data() {
     return {
       product: {},
       qty: 1,
       desStr: [],
+      icon: {
+        isLoading: '',
+      },
     };
   },
   methods: {
@@ -95,12 +102,15 @@ export default {
     },
     addToCart(id) {
       const cart = { product_id: id, qty: this.qty };
+      this.icon.isLoading = id;
       this.$http
         .post(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`, { data: cart })
         .then((res) => {
           console.log(res);
           if (res.data.success) {
             console.log(res.data);
+            this.icon.isLoading = '';
+            emitter.emit('update-cart');
           } else {
             console.log(res.data.message);
           }

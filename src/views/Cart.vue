@@ -96,6 +96,8 @@
 </template>
 
 <script>
+import emitter from '../assets/javascript/emitter';
+
 export default {
   data() {
     return {
@@ -149,6 +151,7 @@ export default {
           if (res.data.success) {
             this.icon.isLoading = '';
             this.getCarts();
+            emitter.emit('update-cart');
           } else {
             console.log(res.data.message);
           }

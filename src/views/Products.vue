@@ -72,6 +72,7 @@
 
 <script>
 import Pagination from '@/components/Pagination.vue';
+import emitter from '../assets/javascript/emitter';
 
 export default {
   components: {
@@ -98,6 +99,7 @@ export default {
           if (res.data.success) {
             console.log(res.data);
             this.loadingStatus.isLoading = '';
+            emitter.emit('update-cart');
           } else {
             console.log(res.data.message);
           }

@@ -1,0 +1,165 @@
+@mixin pad {
+  @media (max-width: 769px) {
+    @content;
+  }
+}
+.font {
+  font-family: "Viaoda Libre", cursive;
+}
+.poly {
+  height: 250px;
+  max-width: 100%;
+  &.poly-white {
+    background-color: #84543b;
+    clip-path: polygon(100% 100%, 0 100%, 100% 40%);
+    margin-bottom: -4px;
+  }
+  &.poly-secondary {
+    margin-top: -4px;
+  }
+}
+header {
+  .hero-text {
+    font-size: 30vw;
+    color: #f00;
+    opacity: 0.1;
+    z-index: 1;
+    user-select: none;
+  }
+  .logo {
+    z-index: 2;
+    position: relative;
+    animation: logo 2s infinite;
+  }
+  @keyframes logo {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  overflow: hidden;
+  height: calc(100vh - 72px );
+  background-color: #402219;
+  color: #ececec;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .header-bottom {
+    bottom: calc(0% - 15px);
+    width: 105%;
+    background-color: transparent;
+    z-index: 2;
+  }
+  .h1 {
+    letter-spacing: 3px;
+  }
+  .explore {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: scroll 2s infinite;
+    &::after {
+      display: block;
+      color: #e6af21;
+      content: "↯";
+      transform: scale(1.5);
+    }
+  }
+  @keyframes scroll {
+    0% {
+      top: 85%;
+    }
+    50% {
+      top: 90%;
+    }
+    100% {
+      top: 85%;
+    }
+  }
+}
+section.about {
+  position: relative;
+  .person {
+    top: -28%;
+    right: 10%;
+    z-index: 10;
+    @include pad {
+      top: -18%;
+    }
+  }
+  .photo {
+    background-image: url(https://images.unsplash.com/photo-1504538292323-20e79775474d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80);
+  }
+}
+section.why {
+  .poly {
+    background: #e6af21;
+    clip-path: polygon(0 0, 100% 60%, 100% 0);
+    position: relative;
+    z-index: 1;
+  }
+}
+section.way {
+  color: #ececec;
+  p {
+    line-height: 2rem;
+    font-size: 1.2rem;
+  }
+}
+section.product {
+  .product {
+    background-color: #eee;
+  }
+  .bg-lg {
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    @include pad {
+      height: 300px;
+    }
+  }
+  .bg {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+  }
+  .button {
+    text-decoration: none;
+    padding: 1rem;
+    background-color: #84543b;
+    color: #fff;
+    position: relative;
+    z-index: 10;
+    &:hover {
+      color: #fff;
+    }
+    &::before {
+      transition: 0.3s ease-in-out;
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 0;
+      width: 0px;
+      height: 100%;
+      background-color: #e6af21;
+      z-index: -1;
+    }
+    &:hover::before {
+      content: "";
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+  .bg-cover {
+    background-size: cover;
+    background-position: center center;
+  }
+}
