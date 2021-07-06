@@ -1,0 +1,17 @@
+nav.navbar {
+  padding: 5px;
+  transition: 0.5s;
+}
+nav.navbar .logo {
+  width: 25px;
+  transform: rotate(15deg);
+}
+nav.navbar a {
+  transition: 0.3s;
+}
+ul.list li{
+  list-style: none;
+  a {
+    padding: 10px 15px;
+  }
+}
