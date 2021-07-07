@@ -25,9 +25,15 @@
             </ul>
           </td>
           <td class="text-end">
-            {{ item.total }}
+            NT$ {{ item.total }}
           </td>
           <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox"
+              id="is_paid" :checked="item.is_paid" @change="updatePaid(item)">
+              <label class="form-check-label" for="is_paid">
+              </label>
+            </div>
             <span v-if="item.is_paid" class="text-success">已付款</span>
             <span v-else>未付款</span>
           </td>
@@ -61,6 +67,19 @@ export default {
         console.log(res);
         this.orders = res.data.orders;
         this.pagination = res.data.pagination;
+      });
+    },
+    updatePaid(item) {
+      const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
+      const paid = {
+        is_paid: !item.is_paid,
+      };
+      this.$http.put(api, { data: paid }).then((res) => {
+        if (res.data.success) {
+          this.getOrders();
+        } else {
+          console.log(res.data);
+        }
       });
     },
   },

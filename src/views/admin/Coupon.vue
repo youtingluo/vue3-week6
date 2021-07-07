@@ -19,7 +19,7 @@
       <tr v-for="item in coupons" :key="item.id">
         <td>{{ item.title }}</td>
         <td>{{ item.percent }}%</td>
-        <td>{{ item.due_date }}</td>
+        <td>{{ new Date(item.due_date * 1000 ).toLocaleDateString() }}</td>
         <td>
           <span v-if="item.is_enabled" class="text-success">啟用</span>
           <span v-else>未啟用</span>
