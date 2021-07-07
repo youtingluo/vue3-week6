@@ -3,6 +3,9 @@ import { createApp } from 'vue';
 import 'bootstrap';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+// 讀取套件
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import {
   Field, Form, ErrorMessage, defineRule, configure,
 } from 'vee-validate';
@@ -35,4 +38,5 @@ app.use(router);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);
+app.component('Loading', VueLoading);
 app.mount('#app');

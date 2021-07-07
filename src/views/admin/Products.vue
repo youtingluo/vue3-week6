@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" loader="bars" color="#84543B"></Loading>
   <div class="container">
     <div class="text-end mt-3">
       <button type="button" class="btn btn-primary" @click="openModal(true)">建立新產品</button>
@@ -62,6 +63,7 @@ export default {
       pagination: {},
       tempProduct: {},
       isNew: false,
+      isLoading: false,
     };
   },
   // 區域註冊元件
@@ -91,10 +93,12 @@ export default {
     },
     // 取得產品
     getProducts(page = 1) {
+      this.isLoading = true;
       // API
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`;
       this.$http.get(api).then((res) => {
         if (res.data.success) {
+          this.isLoading = false;
           this.products = res.data.products;
           this.pagination = res.data.pagination;
         } else {
@@ -103,6 +107,7 @@ export default {
       });
     },
     updateProduct(item) {
+      this.isLoading = true;
       this.tempProduct = item;
       let api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product`;
       let method = 'post';
@@ -112,7 +117,7 @@ export default {
       }
       this.$http[method](api, { data: this.tempProduct }).then((res) => {
         if (res.data.success) {
-          console.log('新增成功');
+          this.isLoading = false;
           this.$refs.productModal.hideModal();
           this.getProducts();
         } else {
@@ -122,11 +127,12 @@ export default {
       });
     },
     deleteProduct() {
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
       this.$http.delete(api).then((res) => {
         console.log(res);
         if (res.data.success) {
-          console.log('刪除成功');
+          this.isLoading = false;
           this.$refs.delModal.hideModal();
           this.getProducts();
         } else {

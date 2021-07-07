@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" loader="bars" color="#84543B"></Loading>
   <div class="container-fluid mt-5">
     <div class="row">
       <div class="col-lg-3 mb-3 mb-lg-0">
@@ -83,6 +84,7 @@ export default {
       loadingStatus: {
         isLoading: '',
       },
+      isLoading: false,
       products: [],
       pagination: {},
       qty: 1,
@@ -109,11 +111,13 @@ export default {
         });
     },
     getProducts(page = 1) {
+      this.isLoading = true;
       this.$http
         .get(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`)
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {
+            this.isLoading = false;
             this.products = res.data.products;
             this.pagination = res.data.pagination;
           } else {

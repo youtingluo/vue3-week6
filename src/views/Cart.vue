@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" loader="bars" color="#84543B"></Loading>
 <div class="banner d-flex align-items-center justify-content-center">
     <h2 class="text-white fw-bold bg-primary
     border-bottom border-3 d-inline-block py-3 px-5">您的購物車</h2>
@@ -107,14 +108,17 @@ export default {
       icon: {
         isLoading: '',
       },
+      isLoading: false,
     };
   },
   methods: {
     getCarts() {
+      this.isLoading = true;
       this.$http
         .get(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           if (res.data.success) {
+            this.isLoading = false;
             console.log(res);
             this.carts = res.data.data;
           } else {
@@ -126,12 +130,14 @@ export default {
         });
     },
     updateCart(item, qty) {
+      this.isLoading = true;
       this.icon.isLoading = item.id;
       const cart = { product_id: item.product_id, qty };
       this.$http
         .put(`${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`, { data: cart })
         .then((res) => {
           if (res.data.success) {
+            this.isLoading = false;
             console.log(res.data.message);
             this.getCarts();
             this.icon.isLoading = '';

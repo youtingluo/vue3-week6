@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" loader="bars" color="#84543B"></Loading>
   <div>
     <div class="text-end mt-4">
       <button class="btn btn-primary" type="button" @click="openModal(true)">
@@ -53,6 +54,7 @@ export default {
       tempCoupon: {
         is_enabled: 0,
       },
+      isLoading: false,
     };
   },
   components: {
@@ -77,6 +79,7 @@ export default {
       this.$refs.delModal.openModal();
     },
     updateCoupon(item) {
+      this.isLoading = true;
       this.tempCoupon = item;
       let api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupon`;
       let method = 'post';
@@ -86,7 +89,7 @@ export default {
       }
       this.$http[method](api, { data: this.tempCoupon }).then((res) => {
         if (res.data.success) {
-          console.log('新增成功');
+          this.isLoading = false;
           this.$refs.couponModal.hideModal();
           this.getCoupons();
         } else {
@@ -96,11 +99,12 @@ export default {
       });
     },
     deleteCoupon() {
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
       this.$http.delete(api).then((res) => {
         console.log(res);
         if (res.data.success) {
-          console.log('刪除成功');
+          this.isLoading = false;
           this.$refs.delModal.hideModal();
           this.getCoupons();
         } else {
@@ -110,10 +114,13 @@ export default {
       });
     },
     getCoupons(page = 1) {
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`;
       this.$http.get(api).then((res) => {
-        console.log(res);
-        this.coupons = res.data.coupons;
+        if (res.data.success) {
+          this.isLoading = false;
+          this.coupons = res.data.coupons;
+        }
       });
     },
   },

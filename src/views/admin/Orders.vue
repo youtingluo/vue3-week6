@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060" loader="bars" color="#84543B"></Loading>
   <div class="container">
     <table class="table mt-4">
       <thead>
@@ -55,6 +56,7 @@ export default {
     return {
       orders: [],
       pagination: {},
+      isLoading: false,
     };
   },
   components: {
@@ -62,20 +64,25 @@ export default {
   },
   methods: {
     getOrders(page = 1) {
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(api).then((res) => {
-        console.log(res);
-        this.orders = res.data.orders;
-        this.pagination = res.data.pagination;
+        if (res.data.success) {
+          this.isLoading = false;
+          this.orders = res.data.orders;
+          this.pagination = res.data.pagination;
+        }
       });
     },
     updatePaid(item) {
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_URL}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
       const paid = {
         is_paid: !item.is_paid,
       };
       this.$http.put(api, { data: paid }).then((res) => {
         if (res.data.success) {
+          this.isLoading = false;
           this.getOrders();
         } else {
           console.log(res.data);
